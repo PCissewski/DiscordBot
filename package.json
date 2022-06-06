@@ -1,0 +1,11 @@
+{
+  "name": "Man of Culture",
+  "version": "1.0.0",
+  "description": "Man of Culture WIP",
+  "main": "bot.js",
+  "author": "Paul",
+  "dependencies": {
+    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+    "winston": "^3.2.1"
+  }
+}
