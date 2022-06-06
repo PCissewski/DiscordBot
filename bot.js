@@ -1,52 +1,27 @@
-var Discord = require('discord.io');
-var logger = require('winston');
-var auth = require('./auth.json');
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
-logger.level = 'debug';
-// Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token,
-   autorun: true
-});
-bot.on('ready', function (evt) {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
-});
-bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
-    if (message.substring(0, 1) == '?') {
-        var args = message.substring(1).split(' ');
-        var cmd = args[0];
-       
-        args = args.splice(1);
-        switch(cmd) {
-            // !ping
-            case 'find':
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Find what ?'
-                });
-            break;
-            // Just add any case commands if you want to..
-         }
-     }
-    else if (message.substring(0, 4) == 'stfu') {
-        bot.sendMessage({
-            to: channelID,
-            message: 'No u'
-        })
-    }
-    else if (message.substring(0, 4) == 'no u') {
-        bot.sendMessage({
-            to: channelID,
-            message: 'No u'
-        })
-    }
+require('dotenv').config()
+const auth = require('./auth.json')
 
-});
+// Import necessary Discord.js classes
+const { Client, Intents } = require('discord.js');
+
+// Instantiate new client object with desired Intents
+const client = new Client(
+    { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
+// Authenticate
+client.login(auth.token)
+
+// Notify successful connection via console
+client.on('ready', function(e){
+    console.log(`Logged in as ${client.user.tag}!`)
+})
+
+// Wait for message events, check content for match,
+// respond cordially to user via reply.
+client.on('message',
+    function(msg){
+        msg.content = msg.content.toLowerCase();
+        if (msg.content === "arka gdynia"){
+            msg.reply("kurwa świnia!")
+        }
+    })
