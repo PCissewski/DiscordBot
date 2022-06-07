@@ -1,5 +1,3 @@
-import { Message } from "discord.js";
-
 require('dotenv').config()
 const auth = require('./auth.json')
 
@@ -12,7 +10,7 @@ logger.add(new logger.transports.Console, {
 logger.level = 'debug';
 
 // Import necessary Discord.js classes
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, Message } = require('discord.js');
 
 // Instantiate new client object with desired Intents
 const client = new Client(
@@ -41,6 +39,7 @@ client.on('message',
         
     })
 
-function handleCommands(msg: Message){
-    msg.reply(msg.author.username)
+function handleCommands(msg){
+    var message = Message;
+    message = msg;
 }
