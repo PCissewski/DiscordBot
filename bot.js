@@ -10,7 +10,7 @@ logger.add(new logger.transports.Console, {
 logger.level = 'debug';
 
 // Import necessary Discord.js classes
-const { Client, Intents, Message } = require('discord.js');
+const { Client, Intents} = require('discord.js');
 
 // Instantiate new client object with desired Intents
 const client = new Client(
@@ -28,18 +28,50 @@ client.on('ready', function(e){
 // respond cordially to user via reply.
 client.on('message',
     function(msg){
+
+        if (msg.author.id === client.user.id)
+            return
+
         msg.content = msg.content.toLowerCase();
-        logger.info(msg.author.username);
+        const channel = msg.channel;
+
         if (msg.content[0] === "-") {
-            handleCommands(msg)
+            handleCommands(msg, channel)
         }
-        else if (msg.content === "arka gdynia"){
-            msg.reply("kurwa świnia!")
+        else {
+            textRespond(msg, channel)
         }
-        
     })
 
-function handleCommands(msg){
-    var message = Message;
-    message = msg;
+function handleCommands(msg, channel) {
+    msg.content = msg.content.replace('-', '')
+    
+    switch (msg.content) {
+        case 'ping':
+            channel.send("Dupsko")
+            break;
+        case 'poll':
+            createPoll()
+            break;
+        default:
+            break;
+    }
+}
+
+function textRespond(msg, channel) {
+    msg.content = msg.content.toLowerCase();
+    switch (msg.content) {
+        case "arka gdynia":
+            msg.reply("kurwa świnia!")
+            break;
+        case "jd":
+            channel.send("jd")
+            break;
+        default:
+            break;
+    }
+}
+
+function createPoll() {
+
 }
